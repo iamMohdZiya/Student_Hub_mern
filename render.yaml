@@ -1,0 +1,60 @@
+services:
+  # Web service for the full-stack application
+  - type: web
+    name: studenthub-app
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: |
+      echo "Building StudentHub Application..."
+      # Install backend dependencies
+      echo "Installing backend dependencies..."
+      cd backend && npm ci --production --silent
+      
+      # Install frontend dependencies and build
+      echo "Installing frontend dependencies..."
+      cd ../frontend && npm ci --silent
+      
+      echo "Building frontend..."
+      npm run build
+      
+      # Move frontend build to backend public directory
+      echo "Setting up static files..."
+      rm -rf ../backend/public
+      mv dist ../backend/public
+      
+      # Create necessary directories
+      mkdir -p ../backend/uploads/profiles ../backend/uploads/posts ../backend/logs
+      
+      echo "Build completed successfully!"
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        sync: false
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+
+# Note: Render doesn't support MongoDB directly
+# You'll need to use MongoDB Atlas or another external MongoDB service
+# Comment out the databases section and use MongoDB Atlas connection string
+
+# databases:
+#   # MongoDB database
+#   - name: studenthub-mongodb
+#     databaseName: studenthub
+#     user: studenthub_user
+#     plan: starter
+#     region: oregon
