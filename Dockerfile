@@ -4,7 +4,7 @@ FROM node:18-alpine AS frontend-builder
 
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci  # ✅ install devDependencies too for build
+RUN npm ci  # install devDependencies for build
 
 COPY frontend/ ./
 RUN npm run build
@@ -12,11 +12,12 @@ RUN npm run build
 # Stage 2: Setup backend with frontend build
 FROM node:18-alpine AS production
 
+ENV NODE_ENV=production  # ✅ ensures backend serves built frontend
 RUN npm install -g pm2
 
 WORKDIR /app
 COPY backend/package*.json ./
-RUN npm ci --only=production  # backend only needs production deps
+RUN npm ci --only=production
 
 COPY backend/ ./
 COPY --from=frontend-builder /app/frontend/dist ./public
