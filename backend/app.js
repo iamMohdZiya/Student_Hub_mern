@@ -14,9 +14,17 @@ require('dotenv').config();
 db();
 
 // CORS configuration
-const allowedOrigins = process.env.NODE_ENV === 'production' 
+const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true' || process.env.RENDER_SERVICE_NAME;
+const allowedOrigins = isProduction 
   ? (process.env.CORS_ORIGIN || '').split(',').filter(Boolean)
   : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'];
+
+// Add Render domain automatically if we're on Render but CORS_ORIGIN isn't set
+if (process.env.RENDER_SERVICE_NAME && allowedOrigins.length === 0) {
+  allowedOrigins.push(`https://${process.env.RENDER_SERVICE_NAME}.onrender.com`);
+}
+
+console.log('CORS allowed origins:', allowedOrigins);
 
 app.use(cors({
   origin: allowedOrigins,
@@ -51,21 +59,86 @@ app.use('/posts', postRoutes);
 app.use('/admin', adminRoutes);
 app.use('/education', educationRoutes);
 
-// Serve React frontend in production
-if (process.env.NODE_ENV === 'production') {
+// Debug endpoint to check environment
+app.get('/debug', (req, res) => {
+  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+  const indexPath = path.join(frontendPath, 'index.html');
+  const fs = require('fs');
+  
+  res.json({
+    nodeEnv: process.env.NODE_ENV,
+    currentDir: __dirname,
+    frontendPath: frontendPath,
+    indexExists: fs.existsSync(indexPath),
+    frontendDirExists: fs.existsSync(frontendPath),
+    frontendContents: fs.existsSync(frontendPath) ? fs.readdirSync(frontendPath) : 'Directory not found',
+    port: process.env.PORT,
+    corsOrigin: process.env.CORS_ORIGIN
+  });
+});
+
+// Serve React frontend in production or on Render
+// Check for production OR if we're on Render platform
+const isRenderPlatform = process.env.RENDER === 'true' || process.env.RENDER_SERVICE_NAME;
+
+console.log('Environment check:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('RENDER:', process.env.RENDER);
+console.log('RENDER_SERVICE_NAME:', process.env.RENDER_SERVICE_NAME);
+console.log('isProduction:', isProduction);
+console.log('isRenderPlatform:', isRenderPlatform);
+
+if (isProduction) {
   // Serve static files from the React app build
   const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+  
+  // Log the frontend path for debugging
+  console.log('Production mode - serving frontend from:', frontendPath);
+  console.log('Frontend directory exists:', require('fs').existsSync(frontendPath));
+  
   app.use(express.static(frontendPath));
 
   // Catch all handler: send back React's index.html file
   app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
+    const indexPath = path.join(frontendPath, 'index.html');
+    
+    // Skip API routes
+    if (req.path.startsWith('/user') || req.path.startsWith('/posts') || 
+        req.path.startsWith('/admin') || req.path.startsWith('/education') || 
+        req.path.startsWith('/health') || req.path.startsWith('/debug') ||
+        req.path.startsWith('/uploads')) {
+      return;
+    }
+    
+    // Check if index.html exists, if not, show a helpful message
+    if (require('fs').existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(500).send(`
+        <h1>Frontend Build Not Found</h1>
+        <p>The frontend build directory was not found at: ${frontendPath}</p>
+        <p>Make sure the frontend build completed successfully during deployment.</p>
+        <p>Backend is running correctly - check /health endpoint</p>
+        <p>Check debug info at /debug endpoint</p>
+        <hr>
+        <p><strong>Quick Debug:</strong></p>
+        <p>NODE_ENV: ${process.env.NODE_ENV}</p>
+        <p>Current directory: ${__dirname}</p>
+        <p>Looking for frontend at: ${frontendPath}</p>
+      `);
+    }
   });
 } else {
   app.get('/', (req, res) => {
-    res.send('Welcome to the StudentHub backend server! Frontend is running on port 5173.');
+    res.send(`
+      <h1>Welcome to the StudentHub backend server!</h1>
+      <p>Frontend is running on port 5173.</p>
+      <p><strong>Current Environment:</strong> ${process.env.NODE_ENV || 'development'}</p>
+      <p><a href="/health">Health Check</a> | <a href="/debug">Debug Info</a></p>
+    `);
   });
 }
+
 
 
 

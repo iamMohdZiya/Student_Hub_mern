@@ -18,10 +18,8 @@ services:
       echo "Building frontend..."
       npm run build
       
-      # Move frontend build to backend public directory
-      echo "Setting up static files..."
-      rm -rf ../backend/public
-      mv dist ../backend/public
+      # Keep frontend build in expected location
+      echo "Frontend build completed and ready to serve..."
       
       # Create necessary directories
       mkdir -p ../backend/uploads/profiles ../backend/uploads/posts ../backend/logs
