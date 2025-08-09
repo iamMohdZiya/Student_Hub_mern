@@ -53,18 +53,20 @@ app.use('/education', educationRoutes);
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, 'public')));
-  
+  // Serve static files from the React app build
+  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+  app.use(express.static(frontendPath));
+
   // Catch all handler: send back React's index.html file
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(frontendPath, 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
     res.send('Welcome to the StudentHub backend server! Frontend is running on port 5173.');
   });
 }
+
 
 
 app.listen(process.env.PORT || 3000, () => {
