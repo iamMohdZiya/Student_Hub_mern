@@ -88,29 +88,30 @@ console.log('RENDER_SERVICE_NAME:', process.env.RENDER_SERVICE_NAME);
 console.log('isProduction:', isProduction);
 console.log('isRenderPlatform:', isRenderPlatform);
 
+
 if (isProduction) {
-  // Serve static files from the React app build
   const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
   
-  // Log the frontend path for debugging
   console.log('Production mode - serving frontend from:', frontendPath);
   console.log('Frontend directory exists:', require('fs').existsSync(frontendPath));
   
+  // Serve static files
   app.use(express.static(frontendPath));
 
-  // Catch all handler: send back React's index.html file
-  app.get('*', (req, res) => {
+  // Catch-all handler for React routes - using regex pattern to avoid path-to-regexp issues
+  app.get(/.*/, (req, res, next) => {
     const indexPath = path.join(frontendPath, 'index.html');
-    
-    // Skip API routes
-    if (req.path.startsWith('/user') || req.path.startsWith('/posts') || 
-        req.path.startsWith('/admin') || req.path.startsWith('/education') || 
-        req.path.startsWith('/health') || req.path.startsWith('/debug') ||
-        req.path.startsWith('/uploads')) {
-      return;
+
+    // Skip API/static routes
+    const skipPrefixes = [
+      '/user', '/posts', '/admin', '/education',
+      '/health', '/debug', '/uploads'
+    ];
+    if (skipPrefixes.some(prefix => req.path.startsWith(prefix))) {
+      return next();
     }
-    
-    // Check if index.html exists, if not, show a helpful message
+
+    // Serve React index.html if it exists
     if (require('fs').existsSync(indexPath)) {
       res.sendFile(indexPath);
     } else {
@@ -138,6 +139,7 @@ if (isProduction) {
     `);
   });
 }
+
 
 
 

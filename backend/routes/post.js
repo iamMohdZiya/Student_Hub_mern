@@ -22,14 +22,14 @@ router.post(
 // Get all posts
 router.get('/', getAllPosts);
 
-// Get a single post by ID
-router.get('/:postId', getPostById);
+// Get current user's posts (must come before /:postId to avoid conflicts)
+router.get('/my-posts', checkForAthenticationCookie('token'), getPostsByUser);
 
-// Get posts by user ID
+// Get posts by user ID  
 router.get('/user/:userId', getPostsByUser);
 
-// Get current user's posts
-router.get('/my-posts', checkForAthenticationCookie('token'), getPostsByUser);
+// Get a single post by ID
+router.get('/:postId', getPostById);
 
 // Update a post with optional image upload
 router.put(
