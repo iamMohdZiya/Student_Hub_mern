@@ -7,9 +7,9 @@ services:
     region: oregon
     buildCommand: |
       echo "Building StudentHub Application..."
-      # Install backend dependencies
+      # Install backend dependencies (without --production to get all deps)
       echo "Installing backend dependencies..."
-      cd backend && npm ci --production --silent
+      cd backend && npm ci --silent
       
       # Install frontend dependencies and build
       echo "Installing frontend dependencies..."
@@ -17,6 +17,10 @@ services:
       
       echo "Building frontend..."
       npm run build
+      
+      # Verify build output
+      echo "Verifying frontend build..."
+      ls -la dist/
       
       # Keep frontend build in expected location
       echo "Frontend build completed and ready to serve..."
