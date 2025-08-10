@@ -14,7 +14,7 @@ require('dotenv').config();
 db();
 
 // CORS configuration
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'development';
 const isDocker = process.env.DOCKER === 'true';
 const isRender = process.env.RENDER === 'true' || process.env.RENDER_SERVICE_NAME;
 
