@@ -59,7 +59,13 @@ exports.updateProfile = async (req, res) => {
 // Get user profile
 exports.getProfile = async (req, res) => {
   try {
-    const userId = req.params.userId || req.user.id;
+    // If userId is provided in params, use it (public profile view)
+    // Otherwise, use authenticated user's ID (own profile)
+    const userId = req.params.userId || (req.user && req.user.id);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Authentication required' });
+    }
     
     const user = await User.findById(userId).select('-password -salt');
     

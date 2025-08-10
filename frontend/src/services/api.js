@@ -1,6 +1,22 @@
-const API_BASE_URL = import.meta.env.MODE === 'production' 
-  ? window.location.origin  // Use same origin in production
-  : 'http://localhost:3000'; // Use localhost in development
+// Determine API base URL based on environment
+const getApiBaseUrl = () => {
+  // In production/build mode, use same origin (when served from same server)
+  if (import.meta.env.MODE === 'production') {
+    return window.location.origin;
+  }
+  
+  // In development, use explicit backend URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+  return backendUrl;
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+console.log('API Service initialized:', {
+  mode: import.meta.env.MODE,
+  baseUrl: API_BASE_URL,
+  origin: window.location.origin
+});
 
 // API service class to handle all backend requests
 class ApiService {

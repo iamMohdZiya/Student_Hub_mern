@@ -32,7 +32,7 @@ function checkForAthenticationCookie(cookieName, validRoles = []) {
     } catch (error) {
       console.error('Authentication error:', error.message);
       res.clearCookie(cookieName);
-      next();
+      return res.status(401).json({ message: 'Invalid or expired token' });
     }
   };
 }

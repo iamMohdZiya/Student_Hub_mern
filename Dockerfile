@@ -20,7 +20,8 @@ COPY backend/package*.json ./
 RUN npm ci --only=production
 
 COPY backend/ ./
-COPY --from=frontend-builder /app/frontend/dist ./public
+# Copy frontend build to the correct location where backend expects it
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 RUN mkdir -p uploads/profiles uploads/posts
 

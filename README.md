@@ -247,12 +247,155 @@ jsmajor/
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Troubleshooting
+
+### Common Issues
+
+#### Frontend-Backend Connectivity Issues
+
+**Problem:** Frontend not fetching data from backend, login not working
+
+**Solutions:**
+1. **Development Environment:**
+   - Ensure backend is running on `http://localhost:3000`
+   - Ensure frontend is running on `http://localhost:5173`
+   - Check that Vite proxy is configured correctly in `frontend/vite.config.js`
+   - Check browser console for CORS errors
+
+2. **Production Environment:**
+   - Verify that frontend build exists in `backend/../frontend/dist`
+   - Check that `NODE_ENV=production` is set
+   - Verify CORS origins are configured correctly
+   - Check `/debug` endpoint for build information
+
+3. **Docker Environment:**
+   - Ensure MongoDB is accessible at the specified URI
+   - Check environment variables in docker-compose.yml
+   - Verify that `DOCKER=true` is set
+   - Check container logs: `docker-compose logs app`
+
+#### Authentication Issues
+
+**Problem:** JWT token errors, user not authenticated
+
+**Solutions:**
+1. Check that `JWT_SECRET` is set in environment variables
+2. Clear browser cookies and try again
+3. Check that MongoDB is running and accessible
+4. Verify user approval status in database
+
+#### Database Connection Issues
+
+**Problem:** MongoDB connection errors
+
+**Solutions:**
+1. **Local MongoDB:**
+   ```bash
+   # Start MongoDB service
+   mongod
+   # Or on Windows:
+   net start MongoDB
+   ```
+
+2. **Docker MongoDB:**
+   ```bash
+   docker-compose up mongodb
+   ```
+
+3. **MongoDB Atlas:**
+   - Check internet connection
+   - Verify connection string
+   - Check IP whitelist settings
+
+#### File Upload Issues
+
+**Problem:** Profile pictures or post images not uploading
+
+**Solutions:**
+1. Create upload directories:
+   ```bash
+   mkdir -p backend/uploads/profiles backend/uploads/posts
+   ```
+2. Check file permissions
+3. Verify file size limits (default: 5MB)
+4. Check Cloudinary configuration if using cloud storage
+
+### Quick Development Setup
+
+**For Windows users:**
+```bash
+# Run the setup script
+setup-dev.bat
+```
+
+**For Linux/Mac users:**
+```bash
+# Backend setup
+cd backend
+npm install
+cp .env.example .env  # Edit with your values
+npm run dev
+
+# Frontend setup (in new terminal)
+cd frontend
+npm install
+npm run dev
+```
+
+### Docker Setup
+
+**Quick start with Docker:**
+```bash
+# Build and start all services
+docker-compose up --build
+
+# View logs
+docker-compose logs -f app
+
+# Stop services
+docker-compose down
+```
+
+### Environment Variables Checklist
+
+**Backend (.env):**
+- ✅ `MONGODB_URI` or `MONGO_URI`
+- ✅ `JWT_SECRET` (long, random string)
+- ✅ `NODE_ENV` (development/production)
+- ✅ `PORT` (default: 3000)
+- ⚠️ `CLOUDINARY_*` (optional)
+
+### Testing the Setup
+
+1. **Health Check:** Visit `http://localhost:3000/health`
+2. **Debug Info:** Visit `http://localhost:3000/debug`
+3. **Frontend:** Visit `http://localhost:5173` (dev) or `http://localhost:3000` (prod)
+
+### Log Analysis
+
+**Backend logs to check:**
+- MongoDB connection status
+- CORS origins configuration
+- JWT token validation
+- File upload errors
+
+**Frontend logs to check:**
+- API service initialization
+- Network errors in browser console
+- Authentication state changes
+
 ## Support
 
 If you encounter any issues or have questions, please:
-1. Check the existing issues on GitHub
-2. Create a new issue with detailed information
-3. Contact the development team
+1. Check the troubleshooting section above
+2. Check browser console and server logs
+3. Verify environment variables are correctly set
+4. Check the existing issues on GitHub
+5. Create a new issue with detailed information including:
+   - Operating system
+   - Node.js version
+   - Error messages and logs
+   - Steps to reproduce
 
 ---
 

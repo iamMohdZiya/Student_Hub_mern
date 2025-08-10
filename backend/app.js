@@ -14,24 +14,65 @@ require('dotenv').config();
 db();
 
 // CORS configuration
-const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true' || process.env.RENDER_SERVICE_NAME;
-const allowedOrigins = isProduction 
-  ? (process.env.CORS_ORIGIN || '').split(',').filter(Boolean)
-  : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'];
+const isProduction = process.env.NODE_ENV === 'production';
+const isDocker = process.env.DOCKER === 'true';
+const isRender = process.env.RENDER === 'true' || process.env.RENDER_SERVICE_NAME;
 
-// Add Render domain automatically if we're on Render but CORS_ORIGIN isn't set
-if (process.env.RENDER_SERVICE_NAME && allowedOrigins.length === 0) {
-  allowedOrigins.push(`https://${process.env.RENDER_SERVICE_NAME}.onrender.com`);
+// Set up allowed origins based on environment
+let allowedOrigins;
+if (isProduction || isDocker || isRender) {
+  // In production, Docker, or Render, allow same origin and specified origins
+  allowedOrigins = ['self'];
+  if (process.env.CORS_ORIGIN) {
+    allowedOrigins.push(...process.env.CORS_ORIGIN.split(',').filter(Boolean));
+  }
+  if (isRender && process.env.RENDER_SERVICE_NAME) {
+    allowedOrigins.push(`https://${process.env.RENDER_SERVICE_NAME}.onrender.com`);
+  }
+} else {
+  // In development, allow all localhost variants
+  allowedOrigins = [
+    'http://localhost:3000', 
+    'http://localhost:3001', 
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5173'
+  ];
 }
 
+console.log('Environment:', { isProduction, isDocker, isRender });
 console.log('CORS allowed origins:', allowedOrigins);
 
-app.use(cors({
-  origin: allowedOrigins,
+// CORS configuration function
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    // In production/Docker/Render, allow same origin requests
+    if (isProduction || isDocker || isRender) {
+      // Allow same-origin requests (when frontend is served from same server)
+      if (origin === `http://localhost:${process.env.PORT || 3000}` || 
+          origin === `https://localhost:${process.env.PORT || 3000}`) {
+        return callback(null, true);
+      }
+    }
+    
+    // Check if origin is in allowed origins
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('self')) {
+      callback(null, true);
+    } else {
+      console.warn('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['Set-Cookie']
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
