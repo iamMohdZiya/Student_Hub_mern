@@ -131,10 +131,25 @@ console.log('isRenderPlatform:', isRenderPlatform);
 
 // Serve frontend in production OR on Render platform
 if (isProduction || isRenderPlatform) {
-  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+  // On Render, the working directory is /app, so we need to look for frontend/dist
+  const frontendPath = isRenderPlatform 
+    ? path.join(process.cwd(), 'frontend', 'dist')
+    : path.join(__dirname, '..', 'frontend', 'dist');
   
   console.log('Production mode - serving frontend from:', frontendPath);
+  console.log('Current working directory:', process.cwd());
+  console.log('Backend __dirname:', __dirname);
   console.log('Frontend directory exists:', require('fs').existsSync(frontendPath));
+  
+  // List contents of the frontend directory to help debug
+  const frontendDir = isRenderPlatform 
+    ? path.join(process.cwd(), 'frontend')
+    : path.join(__dirname, '..', 'frontend');
+  console.log('Frontend directory path:', frontendDir);
+  console.log('Frontend directory exists:', require('fs').existsSync(frontendDir));
+  if (require('fs').existsSync(frontendDir)) {
+    console.log('Frontend directory contents:', require('fs').readdirSync(frontendDir));
+  }
   
   // Serve static files
   app.use(express.static(frontendPath));
