@@ -129,8 +129,8 @@ console.log('RENDER_SERVICE_NAME:', process.env.RENDER_SERVICE_NAME);
 console.log('isProduction:', isProduction);
 console.log('isRenderPlatform:', isRenderPlatform);
 
-
-if (isProduction) {
+// Serve frontend in production OR on Render platform
+if (isProduction || isRenderPlatform) {
   const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
   
   console.log('Production mode - serving frontend from:', frontendPath);
@@ -165,8 +165,12 @@ if (isProduction) {
         <hr>
         <p><strong>Quick Debug:</strong></p>
         <p>NODE_ENV: ${process.env.NODE_ENV}</p>
+        <p>RENDER: ${process.env.RENDER}</p>
+        <p>RENDER_SERVICE_NAME: ${process.env.RENDER_SERVICE_NAME}</p>
         <p>Current directory: ${__dirname}</p>
         <p>Looking for frontend at: ${frontendPath}</p>
+        <p>isProduction: ${isProduction}</p>
+        <p>isRenderPlatform: ${isRenderPlatform}</p>
       `);
     }
   });

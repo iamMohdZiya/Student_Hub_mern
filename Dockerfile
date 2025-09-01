@@ -12,7 +12,7 @@ RUN npm run build
 # Stage 2: Setup backend with frontend build
 FROM node:18-alpine AS production
 
-ENV NODE_ENV=production  
+ENV NODE_ENV=production   
 RUN npm install -g pm2
 
 WORKDIR /app

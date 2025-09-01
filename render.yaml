@@ -22,6 +22,12 @@ services:
       echo "Verifying frontend build..."
       ls -la dist/
       
+      # Check if build was successful
+      if [ ! -d "dist" ] || [ ! -f "dist/index.html" ]; then
+        echo "ERROR: Frontend build failed - dist directory or index.html not found"
+        exit 1
+      fi
+      
       # Keep frontend build in expected location
       echo "Frontend build completed and ready to serve..."
       
