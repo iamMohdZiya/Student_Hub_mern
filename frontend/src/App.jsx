@@ -45,7 +45,7 @@ function AdminRoute({ children }) {
 // App Routes Component
 function AppRoutes() {
   return (
-    <div className="min-h-screen main-layout">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

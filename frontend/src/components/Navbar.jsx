@@ -17,156 +17,129 @@ export default function Navbar() {
     }
   };
 
-  const profileImageUrl = user?.profileImage 
+  const profileImageUrl = user?.profileImage
     ? `http://localhost:3000/uploads/profiles/${user.profileImage}`
-    : 'https://via.placeholder.com/32x32?text=User';
+    : 'https://via.placeholder.com/64x64?text=SN';
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 premium-card backdrop-blur-xl bg-opacity-95" style={{
-      background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%)',
-      borderRadius: '0',
-      borderTop: 'none',
-      borderLeft: 'none',
-      borderRight: 'none',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-    }}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Premium Brand */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="premium-dashboard-icon" style={{width: '2.5rem', height: '2.5rem'}}>
-              <span className="text-lg font-black text-white">SN</span>
-            </div>
-            <div className="hidden md:block">
-              <h1 className="text-xl font-bold text-gradient group-hover:scale-105 transition-transform">
-                Elite Student Network
-              </h1>
-              <p className="text-xs text-gray-400 -mt-1">Premium Edition</p>
-            </div>
-          </Link>
-          
-          {/* Center Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <Link 
-              to="/" 
-              className="text-gray-300 hover:text-white transition-colors font-medium hover:text-gradient"
-            >
-              Home
-            </Link>
-            <Link 
-              to="/explore" 
-              className="text-gray-300 hover:text-white transition-colors font-medium hover:text-gradient"
-            >
-              Explore
-            </Link>
-            {isAuthenticated && (
-              <>
-                <Link 
-                  to="/education" 
-                  className="text-gray-300 hover:text-white transition-colors font-medium hover:text-gradient"
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-lg font-black text-white shadow-lg shadow-indigo-900/40">
+            SN
+          </div>
+          <div className="hidden md:block">
+            <p className="text-sm uppercase tracking-wide text-slate-400">Stravio</p>
+            <p className="gradient-text text-lg font-semibold leading-5">Student Network</p>
+          </div>
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <NavLink to="/" label="Home" />
+          <NavLink to="/explore" label="Explore" />
+          {isAuthenticated && (
+            <>
+              <NavLink to="/education" label="Education" />
+              {user?.role === 'ADMIN' && <NavLink to="/admin" label="Admin" badge="Admin" />}
+            </>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+
+          {isAuthenticated ? (
+            <div className="relative">
+              <button
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-2 py-1 text-left text-sm text-white shadow-lg shadow-black/30 transition hover:bg-white/10"
+                aria-haspopup="true"
+                aria-expanded={showDropdown}
+              >
+                <img
+                  src={profileImageUrl}
+                  alt="Profile"
+                  className="h-10 w-10 rounded-2xl object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://via.placeholder.com/64x64?text=SN';
+                  }}
+                />
+                <div className="hidden md:flex flex-col leading-tight">
+                  <span className="font-semibold">{user?.name || 'Student'}</span>
+                  <span className="text-xs text-slate-400">{user?.bio || 'Premium Member'}</span>
+                </div>
+                <svg
+                  className={`h-4 w-4 text-slate-400 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Education
-                </Link>
-                {user?.role === 'ADMIN' && (
-                  <Link 
-                    to="/admin" 
-                    className="text-gray-300 hover:text-white transition-colors font-medium hover:text-gradient"
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+
+              {showDropdown && (
+                <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-white/10 bg-slate-900/90 p-4 text-sm text-slate-200 shadow-2xl shadow-black/30 backdrop-blur-xl">
+                  <div className="border-b border-white/10 pb-3">
+                    <p className="text-base font-semibold text-white">{user?.name}</p>
+                    <p className="text-xs text-slate-400">{user?.email}</p>
+                  </div>
+                  <Link
+                    to="/profile"
+                    onClick={() => setShowDropdown(false)}
+                    className="mt-3 flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/5"
                   >
-                    <span className="premium-badge success text-xs mr-2">Admin</span>
-                    Dashboard
+                    <span className="text-lg">👤</span>
+                    <span>View profile</span>
                   </Link>
-                )}
-              </>
-            )}
-          </div>
-          
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <ThemeToggle />
-            
-            {isAuthenticated ? (
-              <div className="relative">
-                <button 
-                  onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-800 transition-colors group"
-                >
-                  <img
-                    src={profileImageUrl}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-lg object-cover border-2 border-gray-700 group-hover:border-purple-500 transition-colors"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/32x32?text=User';
-                    }}
-                  />
-                  <div className="hidden md:block text-left">
-                    <p className="text-sm font-medium text-white group-hover:text-gradient">
-                      {user?.name || 'User'}
-                    </p>
-                    <p className="text-xs text-gray-400">Premium Member</p>
-                  </div>
-                  <svg 
-                    className={`w-4 h-4 text-gray-400 transition-transform ${
-                      showDropdown ? 'rotate-180' : ''
-                    }`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
+                  <button
+                    onClick={handleLogout}
+                    className="mt-2 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-red-300 transition hover:bg-red-500/10 hover:text-red-200"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-64 enhanced-card p-2 animate-scaleIn">
-                    <div className="p-3 border-b border-gray-700 mb-2">
-                      <p className="font-bold text-white">{user?.name}</p>
-                      <p className="text-sm text-gray-400">{user?.bio || 'Elite Network Member'}</p>
-                      <div className="premium-badge success text-xs mt-2">Premium Account</div>
-                    </div>
-                    
-                    <Link 
-                      to="/profile" 
-                      onClick={() => setShowDropdown(false)}
-                      className="flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-800 transition-colors group w-full"
-                    >
-                      <svg className="w-5 h-5 text-gray-400 group-hover:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                      <span className="text-gray-300 group-hover:text-white font-medium">My Profile</span>
-                    </Link>
-                    
-                    <button 
-                      onClick={handleLogout}
-                      className="flex items-center space-x-3 p-3 rounded-xl hover:bg-red-900 transition-colors group w-full"
-                    >
-                      <svg className="w-5 h-5 text-gray-400 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg>
-                      <span className="text-gray-300 group-hover:text-red-400 font-medium">Logout</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <Link 
-                  to="/login" 
-                  className="btn-secondary px-6 py-2 text-sm hover-lift"
-                >
-                  Sign In
-                </Link>
-                <Link 
-                  to="/register" 
-                  className="btn-premium px-6 py-2 text-sm hover-lift font-bold"
-                >
-                  Join Elite
-                </Link>
-              </div>
-            )}
-          </div>
+                    <span className="text-lg">↩</span>
+                    <span>Sign out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Link
+                to="/login"
+                className="rounded-2xl border border-white/10 px-5 py-2 text-slate-200 transition hover:bg-white/10"
+              >
+                Sign in
+              </Link>
+              <Link
+                to="/register"
+                className="rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 px-5 py-2 text-white shadow-lg shadow-indigo-900/40 transition hover:shadow-indigo-900/60"
+              >
+                Join now
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
+  );
+}
+
+function NavLink({ to, label, badge }) {
+  return (
+    <Link
+      to={to}
+      className="group relative flex items-center gap-2 text-slate-300 transition hover:text-white"
+    >
+      {badge && (
+        <span className="rounded-full bg-green-500/20 px-2 py-0.5 text-xs font-semibold text-green-300">
+          {badge}
+        </span>
+      )}
+      <span>{label}</span>
+      <span className="absolute inset-x-0 -bottom-2 h-0.5 origin-center scale-x-0 bg-gradient-to-r from-indigo-500 to-purple-500 transition group-hover:scale-x-100" />
+    </Link>
   );
 }

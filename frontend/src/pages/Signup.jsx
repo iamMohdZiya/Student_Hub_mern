@@ -40,7 +40,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{backgroundColor: 'var(--dark-bg-primary)'}}>
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-md">
         {/* Premium Header */}
         <div className="text-center mb-8">
@@ -50,7 +50,7 @@ export default function Register() {
           <h1 className="text-3xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
             Join StudentHub
           </h1>
-          <p className="text-gray-600 font-medium">Create your premium student network account</p>
+          <p className="text-slate-400 font-medium">Create your premium student network account</p>
         </div>
 
         {/* Premium Registration Form */}
@@ -77,7 +77,7 @@ export default function Register() {
             <div className="space-y-6">
               {/* Name Input */}
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                <label className="block text-sm font-bold text-slate-300 mb-2">Full Name</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -88,7 +88,7 @@ export default function Register() {
                     required
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
@@ -97,7 +97,7 @@ export default function Register() {
 
               {/* Email Input */}
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                <label className="block text-sm font-bold text-slate-300 mb-2">Email Address</label>
                 <div className="relative">
                   <input
                     type="email"
@@ -108,7 +108,7 @@ export default function Register() {
                     required
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                     </svg>
                   </div>
@@ -117,7 +117,7 @@ export default function Register() {
 
               {/* Password Input */}
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Password</label>
+                <label className="block text-sm font-bold text-slate-300 mb-2">Password</label>
                 <div className="relative">
                   <input
                     type="password"
@@ -128,12 +128,12 @@ export default function Register() {
                     required
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
                 </div>
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-slate-500">
                   Password must be at least 6 characters long
                 </p>
               </div>
@@ -142,12 +142,12 @@ export default function Register() {
             {/* Terms and Conditions */}
             <div className="mt-6">
               <label className="flex items-start space-x-3">
-                <input type="checkbox" className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" required />
-                <span className="text-sm text-gray-600">
+                <input type="checkbox" className="mt-1 rounded border-white/20 text-indigo-400 focus:ring-indigo-400" required />
+                <span className="text-sm text-slate-300">
                   I agree to StudentHub's{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-700 font-medium">Terms of Service</a>
+                  <a href="#" className="text-indigo-400 hover:text-indigo-300 font-medium">Terms of Service</a>
                   {' '}and{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-700 font-medium">Privacy Policy</a>
+                  <a href="#" className="text-indigo-400 hover:text-indigo-300 font-medium">Privacy Policy</a>
                 </span>
               </label>
             </div>
@@ -178,10 +178,10 @@ export default function Register() {
             {/* Social Registration Divider */}
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-white/10"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500 font-medium">Or register with</span>
+                <span className="px-4 bg-slate-950 text-slate-400 font-medium">Or register with</span>
               </div>
             </div>
 
@@ -211,9 +211,9 @@ export default function Register() {
             </div>
 
             {/* Benefits Section */}
-            <div className="mt-8 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl">
-              <h4 className="font-bold text-gray-900 mb-3 text-center">Why join StudentHub Premium?</h4>
-              <div className="space-y-2 text-sm text-gray-700">
+            <div className="mt-8 p-4 rounded-2xl border border-white/10 bg-white/5">
+              <h4 className="font-bold text-white mb-3 text-center">Why join StudentHub Premium?</h4>
+              <div className="space-y-2 text-sm text-slate-300">
                 <div className="flex items-center space-x-2">
                   <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -239,9 +239,9 @@ export default function Register() {
 
         {/* Sign In Link */}
         <div className="text-center mt-8">
-          <p className="text-gray-600">
+          <p className="text-slate-400">
             Already have an account?{' '}
-            <Link to="/login" className="font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+            <Link to="/login" className="font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
               Sign in instead
             </Link>
           </p>

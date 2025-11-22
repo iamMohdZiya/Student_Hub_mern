@@ -150,18 +150,18 @@ export default function Profile() {
                 </div>
               </div>
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">{user.name}</h2>
-                <p className="text-gray-600 text-lg font-medium mb-4">{user.email}</p>
+                <h2 className="text-2xl font-bold text-white mb-2">{user.name}</h2>
+                <p className="text-slate-300 text-lg font-medium mb-4">{user.email}</p>
                 <div className="flex items-center space-x-3">
                   <span className={`px-4 py-2 rounded-xl text-sm font-semibold ${
-                    user.status === 'approved' ? 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200' :
-                    user.status === 'pending' ? 'bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 border border-yellow-200' :
-                    'bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border border-red-200'
+                    user.status === 'approved' ? 'bg-green-500/10 text-green-300 border border-green-500/20' :
+                    user.status === 'pending' ? 'bg-yellow-500/10 text-yellow-300 border border-yellow-500/20' :
+                    'bg-red-500/10 text-red-300 border border-red-500/20'
                   }`}>
                     {user.status === 'approved' ? '✅ Verified' : user.status === 'pending' ? '⏳ Pending' : '❌ Rejected'}
                   </span>
                   {user.role === 'ADMIN' && (
-                    <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-800 border border-purple-200">
+                    <span className="px-4 py-2 rounded-xl text-sm font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/20">
                       👑 Admin
                     </span>
                   )}
@@ -173,7 +173,7 @@ export default function Profile() {
               // Edit Form
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="form-field-group">
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                  <label className="block text-sm font-bold text-slate-300 mb-2">Full Name</label>
                   <input
                     type="text"
                     name="name"
@@ -186,7 +186,7 @@ export default function Profile() {
                 </div>
 
                 <div className="form-field-group">
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Bio</label>
+                  <label className="block text-sm font-bold text-slate-300 mb-2">Bio</label>
                   <textarea
                     name="bio"
                     value={profileData.bio}
@@ -197,14 +197,14 @@ export default function Profile() {
                 </div>
 
                 <div className="form-field-group">
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Profile Image</label>
+                  <label className="block text-sm font-bold text-slate-300 mb-2">Profile Image</label>
                   <div className="relative">
                     <input
                       type="file"
                       id="profile-image-input"
                       accept="image/*"
                       onChange={handleImageChange}
-                      className="block w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-indigo-50 file:to-purple-50 file:text-indigo-700 hover:file:from-indigo-100 hover:file:to-purple-100 file:transition-all file:duration-300 cursor-pointer"
+                      className="block w-full text-sm text-slate-300 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-slate-200 hover:file:bg-white/20 file:transition-all file:duration-300 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -245,18 +245,18 @@ export default function Profile() {
               // Display Mode
               <div className="space-y-8">
                 {/* About Section */}
-                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
                   <div className="flex items-center mb-4">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center mr-3">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900">About</h3>
+                    <h3 className="text-xl font-bold text-white">About</h3>
                   </div>
-                  <p className="text-gray-700 text-lg leading-relaxed">
+                  <p className="text-slate-300 text-lg leading-relaxed">
                     {user.bio || (
-                      <span className="text-gray-500 italic">
+                      <span className="text-slate-400 italic">
                         No bio added yet. Click 'Edit Profile' to add information about yourself.
                       </span>
                     )}
@@ -264,33 +264,33 @@ export default function Profile() {
                 </div>
 
                 {/* Account Details Section */}
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
                   <div className="flex items-center mb-6">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center mr-3">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900">Account Details</h3>
+                    <h3 className="text-xl font-bold text-white">Account Details</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-white rounded-xl p-4 border border-emerald-200">
-                      <p className="text-sm font-bold text-gray-700 mb-2 flex items-center">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-sm font-bold text-slate-300 mb-2 flex items-center">
                         <svg className="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                         </svg>
                         Email Address
                       </p>
-                      <p className="text-gray-800 font-medium">{user.email}</p>
+                      <p className="text-slate-200 font-medium">{user.email}</p>
                     </div>
-                    <div className="bg-white rounded-xl p-4 border border-emerald-200">
-                      <p className="text-sm font-bold text-gray-700 mb-2 flex items-center">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-sm font-bold text-slate-300 mb-2 flex items-center">
                         <svg className="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a4 4 0 118 0v4m-6 4v10a2 2 0 002 2h8a2 2 0 002-2V11a2 2 0 00-2-2H8a2 2 0 00-2 2z" />
                         </svg>
                         Member Since
                       </p>
-                      <p className="text-gray-800 font-medium">{new Date(user.createdAt).toLocaleDateString('en-US', {
+                      <p className="text-slate-200 font-medium">{new Date(user.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'

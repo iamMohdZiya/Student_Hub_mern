@@ -33,7 +33,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{backgroundColor: 'var(--dark-bg-primary)'}}>
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-md">
         {/* Premium Header */}
         <div className="text-center mb-8">
@@ -43,7 +43,7 @@ export default function Login() {
           <h1 className="text-3xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
             Welcome Back
           </h1>
-          <p className="text-gray-600 font-medium">Sign in to your StudentHub Premium account</p>
+          <p className="text-slate-400 font-medium">Sign in to your StudentHub Premium account</p>
         </div>
 
         {/* Premium Login Form */}
@@ -61,7 +61,7 @@ export default function Login() {
             <div className="space-y-6">
               {/* Email Input */}
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                <label className="block text-sm font-bold text-slate-300 mb-2">Email Address</label>
                 <div className="relative">
                   <input
                     type="email"
@@ -72,7 +72,7 @@ export default function Login() {
                     required
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                     </svg>
                   </div>
@@ -82,7 +82,7 @@ export default function Login() {
               {/* Password Input */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-bold text-gray-700">Password</label>
+                  <label className="block text-sm font-bold text-slate-300">Password</label>
                   <button type="button" className="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
                     Forgot password?
                   </button>
@@ -97,7 +97,7 @@ export default function Login() {
                     required
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
@@ -131,10 +131,10 @@ export default function Login() {
             {/* Social Login Divider */}
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-white/10"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500 font-medium">Or continue with</span>
+                <span className="px-4 bg-slate-950 text-slate-400 font-medium">Or continue with</span>
               </div>
             </div>
 
@@ -167,9 +167,9 @@ export default function Login() {
 
         {/* Sign Up Link */}
         <div className="text-center mt-8">
-          <p className="text-gray-600">
+          <p className="text-slate-400">
             New to StudentHub?{' '}
-            <Link to="/register" className="font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+            <Link to="/register" className="font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
               Create your account
             </Link>
           </p>

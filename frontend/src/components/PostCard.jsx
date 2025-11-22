@@ -54,16 +54,16 @@ export default function PostCard({ post, onPostDeleted }) {
           {/* User Info & Title */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2 mb-1">
-              <h3 className="font-bold text-gray-900 hover:text-indigo-600 transition-colors cursor-pointer">
+              <h3 className="font-bold text-white hover:text-indigo-300 transition-colors cursor-pointer">
                 {post.userId?.name || 'Unknown User'}
               </h3>
-              <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-              <span className="text-sm text-gray-500">
+              <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
+              <span className="text-sm text-slate-400">
                 {formatDate(post.createdAt || post.updatedAt)}
               </span>
             </div>
-            <p className="text-sm text-gray-600 mb-2">Premium Student Member</p>
-            <h2 className="text-xl font-bold text-gray-900 mb-3 leading-tight">{post.title}</h2>
+            <p className="text-sm text-slate-400 mb-2">Premium Student Member</p>
+            <h2 className="text-xl font-bold text-white mb-3 leading-tight">{post.title}</h2>
           </div>
         </div>
         
@@ -73,7 +73,7 @@ export default function PostCard({ post, onPostDeleted }) {
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="text-gray-400 hover:text-red-500 p-2 rounded-xl hover:bg-red-50 transition-all duration-200 group"
+              className="text-slate-400 hover:text-red-400 p-2 rounded-xl hover:bg-red-500/10 transition-all duration-200 group"
               title={loading ? 'Deleting...' : 'Delete post'}
             >
               {loading ? (
@@ -85,7 +85,7 @@ export default function PostCard({ post, onPostDeleted }) {
               )}
             </button>
           )}
-          <button className="text-gray-400 hover:text-gray-600 p-2 rounded-xl hover:bg-gray-50 transition-all duration-200">
+          <button className="text-slate-400 hover:text-slate-200 p-2 rounded-xl hover:bg-white/10 transition-all duration-200">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
@@ -97,7 +97,7 @@ export default function PostCard({ post, onPostDeleted }) {
       <div className="px-6">
         {post.content && (
           <div className="mb-4">
-            <p className="text-gray-700 leading-relaxed text-base font-medium">{post.content}</p>
+            <p className="text-slate-200 leading-relaxed text-base font-medium">{post.content}</p>
           </div>
         )}
 
@@ -117,12 +117,12 @@ export default function PostCard({ post, onPostDeleted }) {
       </div>
 
       {/* Premium Action Bar */}
-      <div className="border-t border-gray-100 px-6 py-4">
+      <div className="border-t border-white/10 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-6">
             {/* Like Button */}
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-all duration-200 group">
-              <div className="p-2 rounded-xl group-hover:bg-indigo-50 transition-colors">
+            <button className="flex items-center space-x-2 text-slate-300 hover:text-indigo-300 transition-all duration-200 group">
+              <div className="p-2 rounded-xl group-hover:bg-indigo-500/10 transition-colors">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -131,8 +131,8 @@ export default function PostCard({ post, onPostDeleted }) {
             </button>
 
             {/* Comment Button */}
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-all duration-200 group">
-              <div className="p-2 rounded-xl group-hover:bg-green-50 transition-colors">
+            <button className="flex items-center space-x-2 text-slate-300 hover:text-green-300 transition-all duration-200 group">
+              <div className="p-2 rounded-xl group-hover:bg-green-500/10 transition-colors">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -141,8 +141,8 @@ export default function PostCard({ post, onPostDeleted }) {
             </button>
 
             {/* Share Button */}
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-all duration-200 group">
-              <div className="p-2 rounded-xl group-hover:bg-purple-50 transition-colors">
+            <button className="flex items-center space-x-2 text-slate-300 hover:text-purple-300 transition-all duration-200 group">
+              <div className="p-2 rounded-xl group-hover:bg-purple-500/10 transition-colors">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                 </svg>
@@ -152,7 +152,7 @@ export default function PostCard({ post, onPostDeleted }) {
           </div>
 
           {/* Engagement Stats */}
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <div className="flex items-center space-x-4 text-sm text-slate-400">
             <span className="flex items-center space-x-1">
               <span className="w-2 h-2 bg-red-500 rounded-full"></span>
               <span>12 likes</span>
